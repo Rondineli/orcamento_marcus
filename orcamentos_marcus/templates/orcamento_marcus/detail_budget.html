@@ -1,0 +1,54 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+  <h2>Orcamento cadastrado:</h2>
+
+	  <table>
+        <thead>
+          <tr>
+          	  <th data-field="creation_time">Criado</th>
+              <th data-field="id">Id do orcamento</th>
+              <th data-field="client">Nome do cliente</th>
+              <th data-field="total">Total do orcamento</th>
+              <th data-field="total">Acoes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	  <tr>
+	          	<td>{{ object.creation_time |date:"d/m/Y H:i" }}
+	            <td>{{ object.pk }}</td>
+              <td>{{ object.customer.name }}</td>
+	            <td>R$ {{ object.total_value_budget |floatformat:2|intcomma}}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr>
+          	  <th data-field="creation_time">Criado</th>
+              <th data-field="id">Comodo id</th>
+              <th data-field="name">Comodo valor</th>
+              <th data-field="total">Acoes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{% for obj in object.rooms.all %}
+	          <tr>
+	          	<td>{{ obj.creation_time |date:"d/m/Y H:i" }}
+	            <td>{{ obj.pk }}</td>
+	            <td>{{ obj.total_value_room }}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}

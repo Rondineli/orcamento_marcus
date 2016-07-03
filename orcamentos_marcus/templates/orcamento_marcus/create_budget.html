@@ -2,5 +2,41 @@
 {% load humanize %}
 {% block superbody %}
   <h2>Criar novo orcamento</h2>
+  <form action="/create/budget/" method="post">
+    {% csrf_token %}
 
+    <div class="container">
+      <h2>Escolha os comodos para o orcamento:</h2>
+      <div class="row">
+        <div class="col s4">
+          <ul id="rooms">
+            {% for room in form_rooms %}
+              <li id="walls_{{ room.pk }}">
+                <input type="checkbox" id="id_rooms_{{ room.pk }}" class="filled-in" name="room_{{ room.pk }}" value="{{ room.pk }}">
+                <label for="id_rooms_{{ room.pk }}">criado: {{ room.creation_time |date:"d/m/Y H:i"  }} | Total (R$): {{ room.total_value_room }} | total Paredes: {{ room.walls.count }}</label>
+              </li>
+              {% if forloop.counter|divisibleby:4 %}
+                </ul>
+              </div>
+              <div class="col s4">
+                <ul id="rooms_{{ room.counter }}">
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <h2>Escolha o Cliente para o orcamento:</h2>
+      <div class="row">
+        <div class="col s4">
+          <ul id="rooms">
+            <li id="walls_{{ room.pk }}">
+              {{ form }}
+            </li>
+            {# Adicione um botao de adicionar aqui (atalho)#}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Submit" />
+</form>
 {% endblock %}

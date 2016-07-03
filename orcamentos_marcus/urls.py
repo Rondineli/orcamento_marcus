@@ -41,13 +41,15 @@ from orcamentos_marcus.views import (
 	ListCustomer,
 	ListRoom,
 
-	DetailRoom
+	DetailRoom,
+	DetailBudget
 )
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #Details
     url(r'^detail/room/(?P<pk>\d+)/$', DetailRoom.as_view(), name='detail_room'),
+    url(r'^detail/budget/(?P<pk>\d+)/$', DetailBudget.as_view(), name='detail_budget'),
     #Delete
     url(r'^delete/budget/(?P<pk>\d+)/$', DeleteBudget.as_view(), name='delete_budget'),
     url(r'^delete/customer/(?P<pk>\d+)/$', DeleteCustomer.as_view(), name='delete_customer'),

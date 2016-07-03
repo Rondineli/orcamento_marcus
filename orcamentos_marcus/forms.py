@@ -29,7 +29,15 @@ class FormTypePaint(forms.ModelForm):
 class FormBudget(forms.ModelForm):
 	class Meta:
 		model = Budget
-		fields = '__all__'
+		fields = ['customer', ]
+		widgets = {
+			'customer': forms.Select(
+				attrs={
+					'class': 'browser-default',
+					'type': 'text'
+				}
+			)
+		}
 
 
 class FormRoom(forms.ModelForm):

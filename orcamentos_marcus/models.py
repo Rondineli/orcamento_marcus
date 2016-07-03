@@ -101,8 +101,8 @@ class Customer(DatedModel):
         max_length=15
     )
 
-    def __unicode__(Self):
-        return 'Novo cliente: {}'.format(self.name)
+    def __unicode__(self):
+        return '{} | {}'.format(self.name, self.email)
 
 
 class Budget(DatedModel):

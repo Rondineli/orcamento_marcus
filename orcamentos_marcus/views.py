@@ -15,7 +15,8 @@ from django.contrib import messages
 from orcamentos_marcus.forms import (
     FormWall,
     FormTypePaint,
-    FormRoom
+    FormRoom,
+    FormBudget
 )
 from orcamentos_marcus.models import (
     TypePaint,
@@ -135,9 +136,32 @@ class CreateBudget(CreateView):
     template_name = 'orcamento_marcus/create_budget.html'
     model = Budget
     success_url = reverse_lazy('list_budget')
+    form_class = FormBudget
 
     def post(self, request, *args, **kwargs):
-        return super(CreateBudget, self).post(request, *args, **kwargs)
+        data = request.POST.copy()
+        rooms = []
+        total_value_budget = 0
+        for room, id_room in data.iteritems():
+            if room != 'csrfmiddlewaretoken' and room != 'customer':
+                new_room = Room.objects.get(id=id_room)
+                total_value_budget += new_room.total_value_room
+                rooms.append(new_room)
+        self.object = self.model()
+        self.object.customer = Customer.objects.get(id=data['customer'])
+        self.object.total_value_budget = total_value_budget
+        self.object.save()
+        for room in rooms:
+            self.object.rooms.add(room)
+
+        return HttpResponseRedirect(reverse('detail_budget', args=(self.object.id,)))
+
+    def get_context_data(self, **kwargs):
+        if 'form' not in kwargs:
+            kwargs['form'] = self.get_form()
+            kwargs['form_rooms'] = Room.objects.all()
+            kwargs['form_customers'] = Customer.objects.all()
+        return super(CreateBudget, self).get_context_data(**kwargs)
 
     def form_valid(self, form):
         messages.success(self.request, _(u'Budget criado com sucesso'))
@@ -163,12 +187,6 @@ class CreateTypePaint(CreateView):
     def form_valid(self, form):
         messages.success(self.request, _(u'Tipo de pintura cadastrado com sucesso'))
         return super(CreateTypePaint, self).form_valid(form)
-
-
-class DetailRoom(DetailView):
-    model = Room
-    http_method_names = [u'get', ]
-    template_name = 'orcamento_marcus/detail_room.html'
 
 
 class CreateRoom(CreateView):
@@ -221,6 +239,19 @@ class CreateWall(CreateView):
     def form_valid(self, form):
         messages.success(self.request, _(u'Parede cadastrada com sucesso'))
         return super(CreateWall, self).form_valid(form)
+
+
+
+class DetailRoom(DetailView):
+    model = Room
+    http_method_names = [u'get', ]
+    template_name = 'orcamento_marcus/detail_room.html'
+
+
+class DetailBudget(DetailView):
+    model = Budget
+    http_method_names = [u'get', ]
+    template_name = 'orcamento_marcus/detail_budget.html'
 
 
 class ListBudget(ListView):
