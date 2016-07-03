@@ -1,0 +1,29 @@
+  {% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- CSS Class -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    {% block customizing_css %}{% endblock %}
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'css/page-center.css' %}">
+      <link rel="stylesheet" href="{% static 'css/prism.css' %}">
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/perfect-scrollbar.min.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+    {% block cabecalho %}
+    <title>F2B Project - Beta</title>
+    {% endblock %}
+  </head>
+  <body data-twttr-rendered="true" class="red lighten-1 loaded">
+    {% block body %}{% endblock %}
+  </body>
+</html>

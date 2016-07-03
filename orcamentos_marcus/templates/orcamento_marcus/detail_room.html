@@ -1,0 +1,54 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+  <h2>Comodo cadastrado:</h2>
+
+	  <table>
+        <thead>
+          <tr>
+          	  <th data-field="creation_time">Criado</th>
+              <th data-field="id">Id do orcamento</th>
+              <th data-field="name">Total do orcamento</th>
+              <th data-field="total">Acoes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	  <tr>
+	          	<td>{{ object.creation_time |date:"d/m/Y H:i" }}
+	            <td>{{ object.pk }}</td>
+	            <td>R$ {{ object.total_value_room |floatformat:2|intcomma}}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr>
+          	  <th data-field="creation_time">Criado</th>
+              <th data-field="id">Tipo de pintura</th>
+              <th data-field="name">M2</th>
+              <th data-field="price">Desconto M2</th>
+              <th data-field="total">Acoes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{% for obj in object.walls.all %}
+	          <tr>
+	          	<td>{{ obj.creation_time |date:"d/m/Y H:i" }}
+	            <td>{% if obj.type_paint.type_description == 'texture' %} Textura {% else %} Normal {% endif %}</td>
+	            <td>{{ obj.m2 }}</td>
+	            <td>{{ obj.m2_discount }}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+	
+      <table>
+        <thead>
+          <tr>
+              <th data-field="date">Data</th>
+              <th data-field='id'>Id orcamento</th>
+              <th data-field="name">Nome do cliente</th>
+              <th data-field="price">Valor</th>
+              <th data-field="price">Qtde. comodos</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{% for obj in object_list %}
+	          <tr>
+	            <td>{{ obj.creation_time }}</td>
+	            <td>{{ obj.id }}</td>
+              <td>{{ obj.customer.name }}</td>
+              <td>{{ obj.total_value_budget }}</td>
+              <td>{{ obj.rooms_count }}
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}

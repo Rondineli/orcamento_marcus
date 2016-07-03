@@ -1,0 +1,28 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+	
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Data</th>
+              <th data-field="name">Tipo de pintura</th>
+              <th data-field="price">Valor por m2 (R$)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{% for obj in object_list %}
+	          <tr>
+	            <td>{{ obj.creation_time }}</td>
+	            <td>{% if obj.type_description == 'texture' %}Textura {% else %} Normal {% endif %}</td>
+              <td>R$ {{ obj.value |floatformat:2|intcomma }}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}

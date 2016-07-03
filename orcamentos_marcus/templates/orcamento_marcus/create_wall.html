@@ -1,0 +1,10 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+  <h2>Criar nova parede</h2>
+  <form action="/create/wall/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

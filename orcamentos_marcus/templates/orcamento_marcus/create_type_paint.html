@@ -1,0 +1,10 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+  <h2>Criar novo tipo de pintura</h2>
+  <form action="/create/type_paint/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block extra_js %}{% endblock %}
+  {% block body %}
+  <header>
+    <div class="navbar-fixed">
+      <nav class="cyan lighten-1">
+        <div class="nav-wrapper">  
+          <ul class="hide-on-med-and-down">                      
+            <li class="no-hover">
+              <a class="menu-sidebar-collapse btn-floating btn-flat btn-medium waves-effect waves-light cyan hide-on-large-only button-collapse" data-activates="slide-out" href="#">
+                <i class="mdi-navigation-menu"></i>
+              </a>
+            </li>
+            
+            <li>
+              <h1 class="logo-wrapper">
+                <a class="brand-logo darken-1" href="/">
+                  <img class="responsive-img circle" style="width: 66px;heigth:60px;" alt="materialize logo" src="{% static 'images/materialize-logo.png' %}">
+                </a>
+              </h1>
+            </li>
+            <ul class="right">                    
+              <li class="bold">
+                <a class="waves-effect waves-block waves-light" href="/list/type_paint/">
+                  Tipos de pintura
+                </a>
+              </li>                        
+              <li>
+                <a class="waves-effect waves-block waves-light" href="/list/room/">
+                  Comodos
+                </a>
+              </li>
+              <li>
+                <a class="waves-effect waves-block waves-light" href="/list/budget/">
+                  Orcamentos
+                </a>
+              </li>
+              <li>
+                <a class="waves-effect waves-block waves-light" href="/list/wall/">
+                  Paredes
+                </a>
+              </li>
+              <li>
+                <a class="waves-effect waves-block waves-light" href="/list/customers/">
+                  Clientes
+                </a>
+              </li>
+            </ul>
+          </ul>
+          <a href="#" data-activates="slide-out" class="button-collapse">
+            <i class="mdi-navigation-menu"></i>
+          </a>
+          <h1 class="logo-wrapper">
+            <a class="brand-logo darken-1" href="/">
+              <img class="responsive-img circle" style="width: 66px;heigth:60px;" alt="materialize logo" src="{% static 'images/materialize-logo.png' %}">
+            </a>
+          </h1>
+        </div>
+      </nav>
+      {% block menu_content %}{% endblock %}
+    </div>
+
+  </header>
+  <div class="container" id="id_container_ajax_request">
+    {% block superbody %}
+    {% endblock %}
+  </div>
+ <script type="text/javascript" >
+  $('.button-collapse').sideNav({
+      menuWidth: 300, // Default is 240
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
+  function submintForm(){
+    $("#form").submit(function(){
+      var data_post = $(this).serialize();
+      $("#dvloader").show();
+      $(this).attr('style', 'display:none')
+      $.ajax({
+        type: "POST",
+        url: '/get_prices/',
+        data: data_post,
+        success: function(data){
+          Materialize.toast("Redirecionando para a página de resultados", 4000)
+          window.location.href = '/get_prices/'
+        }
+      });
+      return false;
+    })
+  }
+    $(function() {
+        $("#drugs").autocomplete({
+          source: "/search_form/",
+          minLength: 2,
+        });
+      });
+    $(document).ready(function(){
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+      format: 'dd-mm-yyyy'
+    });
+  })
+  </script>
+  
+<footer class="page-footer cyan">
+  <div class="footer-copyright">
+    <div class="container">
+      <span style="margin-left: 250px;">
+        Copyright &copy; 2015
+        <a target="_blank" href="#" class="grey-text text-lighten-4"> <i style="color: yellow;" class="mdi-action-grade"></i>
+          Django Travel
+        </a>
+        All rights reserved.
+      </span>
+
+      <span class="right">
+        Design and Developed by
+          <a href="#" class="grey-text text-lighten-4">
+            Rondineli
+          </a>
+        </span>
+      </div>
+  </div>
+</footer>
+{% endblock %}

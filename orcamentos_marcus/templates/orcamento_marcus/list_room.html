@@ -1,0 +1,31 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+	
+      <table>
+        <thead>
+          <tr>
+              <th data-field="id">Qtde. de Paredes</th>
+              <th data-field="name">Total m2 do comodo</th>
+              <th data-field="price">Total m2 descontado do comodo</th>
+              <th data-field="total">Total (R$)</th>
+              <th data-field="total">Acoes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{% for obj in object_list %}
+	          <tr>
+	            <td>{{ obj.wall_count }}</td>
+	            <td>{{ obj.m2_room }}</td>
+	            <td>{{ obj.m2_room_discount }}</td>
+              <td>R$ {{ obj.value_room |floatformat:2|intcomma }}</td>
+	            <td>
+	            	<i class="mdi-editor-border-color"></i>
+	            	<i class="mdi-content-add-box"></i>
+	          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}

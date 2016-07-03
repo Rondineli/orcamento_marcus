@@ -1,0 +1,17 @@
+{% extends 'base_site.html' %}
+{% load humanize %}
+{% block superbody %}
+  <h2>Criar novo comodo</h2>
+  <form action="/create/room/" method="post">
+    {% csrf_token %}
+    <ul id="walls">
+    	{% for  walls in form_walls %}
+    		<li id="walls_{{ walls.pk }}">
+    			<input type="checkbox" id="id_walls_{{ walls.pk }}" class="filled-in" name="walls_{{ walls.pk }}" value="{{ walls.pk }}">
+    			<label for="id_walls_{{ walls.pk }}">criado: {{ walls.creation_time |date:"d/m/Y H:i"  }} | m2: {{ walls.m2 }} | m2_desconto: {{ walls.m2_discount }}</label>
+    		</li>
+    	{% endfor %}
+    </ul>
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}
